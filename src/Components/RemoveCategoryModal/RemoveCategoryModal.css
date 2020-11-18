@@ -1,0 +1,33 @@
+/*
+* RemoveCategoryModal.css
+*/
+#remove-category-modal {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    width: 99.7%;   /* Fix overflowing right button */
+    height: 2rem;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.2rem;
+    padding: 0.2rem;
+}
+
+#remove-category-modal > button {
+    color: black;
+    border-radius: 0.5rem;
+    background-color: #00000011;
+    border-top: 0.1rem solid var(--palette-e);
+    border-right: 0.1rem solid var(--palette-a);
+    border-bottom: 0.1rem solid var(--palette-a);
+    border-left: 0.1rem solid var(--palette-e);
+}
+
+#remove-category-modal > button:hover {
+    background-color: #00000055;
+    border-top: 0.1rem solid var(--palette-d);
+    border-right: 0.1rem solid black;
+    border-bottom: 0.1rem solid black;
+    border-left: 0.1rem solid var(--palette-d);
+}

@@ -1,0 +1,66 @@
+/*
+* AddSiteModal.css
+*/
+#site-modal {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modal-grid {
+    width: 25rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+#modal-label {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+#input-wrapper {
+    height: 1.1rem;
+    display: grid;
+    column-gap: 0.2rem;
+    grid-template-columns: 1fr 5rem;
+}
+
+#modal-input {
+    border-radius: 0.5rem;
+    height: 1.1rem;
+    font-size: 1.1rem;
+}
+
+#exit-button {
+    position: absolute;
+    top: 0rem;
+    right: 1rem;
+    margin-top: -0.5rem;
+    font-size: 2rem;
+    color: red;
+    cursor: pointer;
+}
+
+#input-wrapper > button {
+    color: black;
+    border-radius: 0.5rem;
+    background-color: #00000011;
+    border-top: 0.1rem solid var(--palette-e);
+    border-right: 0.1rem solid var(--palette-a);
+    border-bottom: 0.1rem solid var(--palette-a);
+    border-left: 0.1rem solid var(--palette-e);
+}
+
+#input-wrapper > button:hover {
+    background-color: #00000055;
+    border-top: 0.1rem solid var(--palette-d);
+    border-right: 0.1rem solid black;
+    border-bottom: 0.1rem solid black;
+    border-left: 0.1rem solid var(--palette-d);
+}

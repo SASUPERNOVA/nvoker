@@ -1,0 +1,52 @@
+/*
+* App.css
+*/
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+:root {
+  --cv-width: 20vw;
+  --sv-cols: 5;
+  --img-ratio: (4/3); /* Due to 800x600 image export */
+  /* COLOR PALETTE */
+  --palette-a: #173c59;
+  --palette-b: #3e5572;
+  --palette-c: #5e7b93;
+  --palette-d: #8096aa;
+  --palette-e: #abb6c4;
+  /* COLOR VARS */
+  --color-cv-menu: var(--palette-c);
+  --color-cv: var(--palette-b);
+  --color-sv-menu: var(--palette-c);
+  --color-sv: var(--palette-a);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#root {
+  height: 100%;
+  display: grid;
+  grid-template-columns: var(--cv-width) 1fr;
+}
+
+button {
+  outline: 0;
+  user-select: none;
+}
+
+input {
+  outline: 0;
+  background-color: #ffffff11;
+  border-top: 0.1rem solid var(--palette-e);
+  border-right: 0.1rem solid var(--palette-a);
+  border-bottom: 0.1rem solid var(--palette-a);
+  border-left: 0.1rem solid var(--palette-e);
+}
+
+input::selection {
+  background-color: var(--palette-d);
+}
