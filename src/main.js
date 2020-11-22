@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Notification, ipcMain, protocol, shell, globalShortcut } = require('electron');
+const { app, BrowserWindow, Notification, ipcMain, protocol, shell, globalShortcut, clipboard } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const { encodeOSString } = require('./utils/os_string');
@@ -279,6 +279,10 @@ ipcMain.on('get-image-path', (e, title) => {
 
 ipcMain.on('goto', (_e, url) => {
   shell.openExternal(url);
+});
+
+ipcMain.on('copy-to-clipboard', (_e, url) => {
+  clipboard.writeText(url);
 });
 
 ipcMain.on('get-css', (e) => {

@@ -37,7 +37,8 @@ function SiteView({addModal, removeModal}) {
             {Object.keys(links).map((url, index) => {
                 let title = links[url];
                 return (
-                    <button className='link-button' key={index} name={url} onClick={onMainElementClicked(removeModalVisible)} onMouseDown={onMainElementPressed(toggleRemoveModal)}>
+                    <button className='link-button' key={index} name={url} onClick={onMainElementClicked(removeModalVisible)} onContextMenu={onMainElementRClicked(removeModalVisible)} 
+                    onMouseDown={onMainElementPressed(toggleRemoveModal)}>
                         <img className='link-button-image' src={ipcRenderer.sendSync('get-image-path', title)} alt={title} draggable='false'/>
                         <span className='link-button-overlay'>{decodeOSString(title)}</span>
                     </button>
@@ -87,8 +88,23 @@ const onMainElementClicked = (isRemoveModalVisible) => (e) => {
         target.classList.toggle('delete-site-selected');
         return;
     }
-
+    
     ipcRenderer.send('goto', target.name);
+}
+
+const onMainElementRClicked = (isRemoveModalVisible) => (e) => {
+    const target = e.currentTarget;
+    if (isRemoveModalVisible) {
+        return;
+    }
+
+    ipcRenderer.send('copy-to-clipboard', target.name);
+    const innerSpan = target.querySelector('span');
+    let innerSpanText = innerSpan.innerText;
+    innerSpan.innerText = "Copied URL";
+    setTimeout(() => {
+        innerSpan.innerText = innerSpanText;
+    }, 500);
 }
 
 export default SiteView;
