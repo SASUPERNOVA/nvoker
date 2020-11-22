@@ -8,7 +8,7 @@ Nvoker is as Speed Dial built on [Electron](https://github.com/electron/electron
 
 ## General Usage
 
-To start adding links, a category must first be created. After a category has been created and selected, you can start adding links to that category by providing its URL. Clicking on a link will open that link in your default browser. You can create any number of categories and links, so feel free to add as many as you wish.  
+To start adding links, a category must first be created. After a category has been created and selected, you can start adding links to that category by providing its URL. Left clicking on a link will open that link in your default browser, while right clicking will copy the URL to clipboard. You can create any number of categories and links, so feel free to add as many as you wish.  
 Navigation of categories and links can be done either by using the mouse wheel, or by clicking and dragging the mouse.  
 Deleting links or categories can be done by clicking and holding on an element that you want to delete, which will bring a menu to delete items of that type (category or link). After the menu appears, you may select any number of elements of that type to delete, and the confirm your selection.
 
