@@ -8,8 +8,13 @@
             await super.connectedCallback();
             this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
             this.addEventListener('add-category-modal-confirm', (ev) => this.onModalConfirm(ev));
+            this.loadCategories();
+        }
+        
+        async loadCategories() {
+            this.shadowRoot.querySelector('#category-view-grid').textContent = '';
             for (const category of await nvokerAPI.loadCategories()) {
-                this.createCategory(category);  
+                this.createCategoryButton(category);  
             }
         }
 
@@ -20,9 +25,10 @@
         
         onModalConfirm(ev) {
             nvokerAPI.addCategory(ev.detail);
+            this.loadCategories();
         }
 
-        createCategory(category) {
+        createCategoryButton(category) {
             const categoryButton = document.createElement('button');
             categoryButton.textContent = category;
             this.shadowRoot.querySelector('#category-view-grid').appendChild(categoryButton);
