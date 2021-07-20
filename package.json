@@ -14,9 +14,7 @@
     "concat-css-win": "type ./src/*.css, ./src/*/*/*.css > ./out/styles.css"
   },
   "keywords": [],
-  "author": {
-    "name": "SASUPERNOVA"
-  },
+  "author": "Alatopoulos Spyridon",
   "license": "MIT",
   "config": {
     "forge": {
