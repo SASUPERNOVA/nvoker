@@ -1,6 +1,0 @@
-/*
-* ScrollContainer.css
-*/
-.hidden-scrollbar::-webkit-scrollbar {
-    display: none;
-}

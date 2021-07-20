@@ -1,10 +1,8 @@
-/*
-* CategoryView.css
-*/
 #category-view {
     display: grid;
     grid-template-rows: 2rem 1fr;
     background-color: var(--color-cv);
+    height: 100%;
 }
 
 #category-view-menu {
