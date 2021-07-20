@@ -17,7 +17,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./src/Nvoker.ico"
+        "icon": "src/media/Nvoker.png"
       },
       "makers": [
         {
