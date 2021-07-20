@@ -6,18 +6,17 @@
 
         async connectedCallback() {
             await super.connectedCallback();
-            this.shadowRoot.querySelector('#add-category-button').addEventListener('click', this.toggleModal);
+            this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
+            this.addEventListener('add-category-modal-confirm', (ev) => this.onModalConfirm(ev));
         }
 
-        toggleModal() {
-            const modal = document.querySelector('add-category-modal');
-            if (modal) {
-                modal.remove();
-            }
-            else {
-                const addCategoryModal = document.createElement('add-category-modal');
-                document.querySelector('#modal-root').appendChild(addCategoryModal);
-            }
+        showAddModal() {
+            const addCategoryModal = document.createElement('add-category-modal');
+            this.shadowRoot.appendChild(addCategoryModal);
+        }
+        
+        onModalConfirm(ev) {
+            console.log(ev.detail);
         }
     }
 
