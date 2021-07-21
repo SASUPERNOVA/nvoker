@@ -20,18 +20,22 @@
         showAddModal() {
             const addCategoryModal = document.createElement('add-category-modal');
             this.shadowRoot.appendChild(addCategoryModal);
-            addCategoryModal.addEventListener('confirm', (ev) => this.onModalConfirm(ev));
+            addCategoryModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
 
         showRemoveModal() {
             const removeCategoryModal = document.createElement('remove-category-modal');
-            console.log(this);
             this.shadowRoot.appendChild(removeCategoryModal);
+            removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
         }
         
-        onModalConfirm(ev) {
+        onAddModalConfirm(ev) {
             nvokerAPI.addCategory(ev.detail);
             this.loadCategories();
+        }
+
+        onRemoveModalConfirm() {
+            console.log('Are you sure?');
         }
 
         createCategoryButton(category) {
