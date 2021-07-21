@@ -53,10 +53,10 @@
             const categoryButton = document.createElement('button');
             categoryButton.textContent = category;
             this.shadowRoot.querySelector('#category-view-grid').appendChild(categoryButton);
-            categoryButton.addEventListener('mousedown', (ev) => this.onSideElementPressed(ev));
+            categoryButton.addEventListener('mousedown', (ev) => this.onCategoryButtonPress(ev));
         }
 
-        onSideElementPressed (ev) {
+        onCategoryButtonPress (ev) {
             const {target} = ev;
         
             const cancelTimeout = () => {
