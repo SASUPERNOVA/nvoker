@@ -16,7 +16,7 @@
         }
 
         onCancelClick() {
-            this.remove();
+            this.dispatchEvent(new CustomEvent('cancel'));
         }
     }
 

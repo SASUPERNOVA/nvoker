@@ -19,14 +19,15 @@
 
         showAddModal() {
             const addCategoryModal = document.createElement('add-category-modal');
-            this.shadowRoot.appendChild(addCategoryModal);
+            document.querySelector('#modal-root').appendChild(addCategoryModal);
             addCategoryModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
 
         showRemoveModal() {
             const removeCategoryModal = document.createElement('remove-category-modal');
-            this.shadowRoot.appendChild(removeCategoryModal);
+            document.querySelector('#modal-root').appendChild(removeCategoryModal);
             removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
+            removeCategoryModal.addEventListener('cancel', (_ev) => this.onRemoveCancel());
         }
         
         onAddModalConfirm(ev) {
@@ -36,7 +37,7 @@
 
         onRemoveModalConfirm() {
             const confirmationModal = document.createElement('confirmation-modal');
-            this.shadowRoot.appendChild(confirmationModal);
+            document.querySelector('#modal-root').appendChild(confirmationModal);
             confirmationModal.setModal('Delete Categories', 'Are you sure you want to delete the selected categories?');
             confirmationModal.setActions(() => this.onRemoveConfirm(), () => this.onRemoveCancel());
         }
@@ -46,7 +47,10 @@
         }
 
         onRemoveCancel() {
-            this.shadowRoot.querySelector('confirmation-modal').remove();
+            for (const category of Array.from(this.shadowRoot.querySelector('#category-view-grid').children)) {
+                category.classList.toggle('delete-category-selected', false);
+            }
+            document.querySelector('#modal-root').children[0].remove();
         }
 
         createCategoryButton(category) {
@@ -75,7 +79,7 @@
         }
 
         onCategoryButtonClick(ev) {
-            if (this.shadowRoot.querySelector('remove-category-modal')) {
+            if (document.querySelector('#modal-root').children.length != 0) {
                 ev.target.classList.toggle('delete-category-selected');
                 return;
             }
