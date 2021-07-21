@@ -35,7 +35,18 @@
         }
 
         onRemoveModalConfirm() {
-            console.log('Are you sure?');
+            const confirmationModal = document.createElement('confirmation-modal');
+            this.shadowRoot.appendChild(confirmationModal);
+            confirmationModal.setModal('Delete Categories', 'Are you sure you want to delete the selected categories?');
+            confirmationModal.setActions(() => this.onRemoveConfirm(), () => this.onRemoveCancel());
+        }
+
+        onRemoveConfirm() {
+            console.log(this);
+        }
+
+        onRemoveCancel() {
+            this.shadowRoot.querySelector('confirmation-modal').remove();
         }
 
         createCategoryButton(category) {
