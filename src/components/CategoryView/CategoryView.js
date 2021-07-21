@@ -22,6 +22,12 @@
             this.shadowRoot.appendChild(addCategoryModal);
             addCategoryModal.addEventListener('confirm', (ev) => this.onModalConfirm(ev));
         }
+
+        showRemoveModal() {
+            const removeCategoryModal = document.createElement('remove-category-modal');
+            console.log(this);
+            this.shadowRoot.appendChild(removeCategoryModal);
+        }
         
         onModalConfirm(ev) {
             nvokerAPI.addCategory(ev.detail);
@@ -32,7 +38,24 @@
             const categoryButton = document.createElement('button');
             categoryButton.textContent = category;
             this.shadowRoot.querySelector('#category-view-grid').appendChild(categoryButton);
-            categoryButton.addEventListener('click', (ev) => console.log(ev.target.value));
+            categoryButton.addEventListener('mousedown', (ev) => this.onSideElementPressed(ev));
+        }
+
+        onSideElementPressed (ev) {
+            const {target} = ev;
+        
+            const cancelTimeout = () => {
+                clearTimeout(holdTimeout);
+                target.removeEventListener('mouseup', cancelTimeout);
+                target.removeEventListener('mouseleave', cancelTimeout);
+            }
+        
+            const holdTimeout = setTimeout(() => {
+                this.showRemoveModal();
+            }, 1000);
+        
+            target.addEventListener('mouseup', cancelTimeout);
+            target.addEventListener('mouseleave', cancelTimeout);
         }
     }
 
