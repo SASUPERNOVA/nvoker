@@ -43,7 +43,12 @@
         }
 
         onRemoveConfirm() {
-            console.log(this);
+            const categories = Array.from(this.shadowRoot.querySelector('#category-view-grid').children)
+            .filter((element) => element.classList.contains('delete-category-selected'))
+            .map(({ textContent }) => textContent);
+            nvokerAPI.removeCategories(categories);
+            this.loadCategories();
+            document.querySelector('#modal-root').children[0].remove();
         }
 
         onRemoveCancel() {
