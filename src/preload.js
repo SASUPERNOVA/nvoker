@@ -12,5 +12,8 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
         catch (err) {
             console.error(err);
         }
+    },
+    removeCategories(categories) {
+        ipcRenderer.send('remove-categories', categories);
     }
 });
