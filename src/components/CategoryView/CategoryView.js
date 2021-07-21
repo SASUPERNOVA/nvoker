@@ -54,6 +54,7 @@
             categoryButton.textContent = category;
             this.shadowRoot.querySelector('#category-view-grid').appendChild(categoryButton);
             categoryButton.addEventListener('mousedown', (ev) => this.onCategoryButtonPress(ev));
+            categoryButton.addEventListener('click', (ev) => this.onCategoryButtonClick(ev));
         }
 
         onCategoryButtonPress (ev) {
@@ -71,6 +72,16 @@
         
             target.addEventListener('mouseup', cancelTimeout);
             target.addEventListener('mouseleave', cancelTimeout);
+        }
+
+        onCategoryButtonClick(ev) {
+            if (this.shadowRoot.querySelector('remove-category-modal')) {
+                ev.target.classList.toggle('delete-category-selected');
+                return;
+            }
+            const category = ev.target.textContent;
+            console.log(category);
+            //ipcRenderer.send('request-links', category);
         }
     }
 
