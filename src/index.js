@@ -47,6 +47,25 @@ ipcMain.on('add-category', (event, category) => {
   fs.writeFileSync(linkPath, JSON.stringify(data, null, ' '));
 });
 
+ipcMain.on('remove-categories', (_event, categories) => {
+  const linkPath = path.join(__dirname, 'userData', 'Links.json');
+
+  let data = fs.readFileSync(linkPath);
+  data = JSON.parse(data);
+
+  for (const category of categories) {
+  const categoryPath = path.join(__dirname, 'userData', 'categories', category);
+    delete data[category];
+    fs.rm(categoryPath, {recursive: true, force: true}, (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  }
+
+  fs.writeFileSync(linkPath, JSON.stringify(data, null, ' '));
+});
+
 ipcMain.handle('load-file', async (_event, fileName) => {
   try {
     const data = fs.readFileSync(path.join(__dirname, 'userData', fileName));
