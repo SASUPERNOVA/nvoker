@@ -21,7 +21,7 @@
         }
 
         onConfirm() {
-            this.hostComponent().dispatchEvent(new CustomEvent('add-category-modal-confirm', {detail: this.props.modalInput.value}));
+            this.dispatchEvent(new CustomEvent('confirm', {detail: this.props.modalInput.value}));
             this.remove();
         }
     }

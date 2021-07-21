@@ -7,7 +7,6 @@
         async connectedCallback() {
             await super.connectedCallback();
             this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
-            this.addEventListener('add-category-modal-confirm', (ev) => this.onModalConfirm(ev));
             this.loadCategories();
         }
         
@@ -21,6 +20,7 @@
         showAddModal() {
             const addCategoryModal = document.createElement('add-category-modal');
             this.shadowRoot.appendChild(addCategoryModal);
+            addCategoryModal.addEventListener('confirm', (ev) => this.onModalConfirm(ev));
         }
         
         onModalConfirm(ev) {
