@@ -6,12 +6,16 @@
 
         async connectedCallback() {
             await super.connectedCallback();
+            this.props = {
+                categoryViewGrid: this.shadowRoot.querySelector('#category-view-grid'),
+                modalRoot: document.querySelector('#modal-root')
+            }
             this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
             this.loadCategories();
         }
         
         async loadCategories() {
-            this.shadowRoot.querySelector('#category-view-grid').textContent = '';
+            this.props.categoryViewGrid.textContent = '';
             for (const category of await nvokerAPI.loadCategories()) {
                 this.createCategoryButton(category);  
             }
@@ -19,13 +23,13 @@
 
         showAddModal() {
             const addCategoryModal = document.createElement('add-category-modal');
-            document.querySelector('#modal-root').appendChild(addCategoryModal);
+            this.props.modalRoot.appendChild(addCategoryModal);
             addCategoryModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
 
         showRemoveModal() {
             const removeCategoryModal = document.createElement('remove-category-modal');
-            document.querySelector('#modal-root').appendChild(removeCategoryModal);
+            this.props.modalRoot.appendChild(removeCategoryModal);
             removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
             removeCategoryModal.addEventListener('cancel', (_ev) => this.onRemoveCancel());
         }
@@ -37,31 +41,31 @@
 
         onRemoveModalConfirm() {
             const confirmationModal = document.createElement('confirmation-modal');
-            document.querySelector('#modal-root').appendChild(confirmationModal);
+            this.props.modalRoot.appendChild(confirmationModal);
             confirmationModal.setModal('Delete Categories', 'Are you sure you want to delete the selected categories?');
             confirmationModal.setActions(() => this.onRemoveConfirm(), () => this.onRemoveCancel());
         }
 
         onRemoveConfirm() {
-            const categories = Array.from(this.shadowRoot.querySelector('#category-view-grid').children)
+            const categories = Array.from(this.props.categoryViewGrid.children)
             .filter((element) => element.classList.contains('delete-category-selected'))
             .map(({ textContent }) => textContent);
             nvokerAPI.removeCategories(categories);
             this.loadCategories();
-            document.querySelector('#modal-root').children[0].remove();
+            this.props.modalRoot.children[0].remove();
         }
 
         onRemoveCancel() {
-            for (const category of Array.from(this.shadowRoot.querySelector('#category-view-grid').children)) {
+            for (const category of Array.from(this.props.categoryViewGrid.children)) {
                 category.classList.toggle('delete-category-selected', false);
             }
-            document.querySelector('#modal-root').children[0].remove();
+            this.props.modalRoot.children[0].remove();
         }
 
         createCategoryButton(category) {
             const categoryButton = document.createElement('button');
             categoryButton.textContent = category;
-            this.shadowRoot.querySelector('#category-view-grid').appendChild(categoryButton);
+            this.props.categoryViewGrid.appendChild(categoryButton);
             categoryButton.addEventListener('mousedown', (ev) => this.onCategoryButtonPress(ev));
             categoryButton.addEventListener('click', (ev) => this.onCategoryButtonClick(ev));
         }
@@ -84,7 +88,7 @@
         }
 
         onCategoryButtonClick(ev) {
-            if (document.querySelector('#modal-root').children.length != 0) {
+            if (this.props.modalRoot.children.length != 0) {
                 ev.target.classList.toggle('delete-category-selected');
                 return;
             }
