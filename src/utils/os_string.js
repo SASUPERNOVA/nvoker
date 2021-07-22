@@ -26,7 +26,9 @@ function decodeOSString(osString) {
     return osString;
 }
 
-module.exports = {
-    encodeOSString,
-    decodeOSString
+if (typeof module !== 'undefined') {
+    module.exports = {
+        encodeOSString,
+        decodeOSString
+    }
 }
