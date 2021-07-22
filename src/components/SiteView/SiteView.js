@@ -10,6 +10,7 @@
                 modalRoot: document.querySelector('#modal-root')
             }
             this.shadowRoot.querySelector('#add-site-button').addEventListener('click', (_ev) => this.showAddModal());
+            this.loadSites('test');
         }
 
         showAddModal() {
@@ -21,8 +22,15 @@
 
         onAddModalConfirm(ev) {
             console.log(ev.detail);
+            nvokerAPI.addSite('test', 'https://www.google.gr');
             //nvokerAPI.addSite(ev.detail);
             //this.loadSites();
+        }
+        
+        async loadSites(category) {
+            for (const [url, title] of Object.entries(await nvokerAPI.loadSites(category))) {
+                console.log(url, title);
+            }
         }
     }
 
