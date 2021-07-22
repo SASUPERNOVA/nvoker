@@ -37,7 +37,7 @@ app.on('activate', () => {
 
 ipcMain.on('add-category', (event, category) => {
   const linkPath = path.join(__dirname, 'userData', 'Links.json');
-  const categoryPath = path.join(__dirname, 'userData', 'categories', category);
+  const categoryPath = path.join(__dirname, 'userData', 'Links', category);
 
   let data = fs.readFileSync(linkPath);
   data = JSON.parse(data);
@@ -55,7 +55,7 @@ ipcMain.on('remove-categories', (_event, categories) => {
   data = JSON.parse(data);
 
   for (const category of categories) {
-  const categoryPath = path.join(__dirname, 'userData', 'categories', category);
+  const categoryPath = path.join(__dirname, 'userData', 'Links', category);
     delete data[category];
     fs.rm(categoryPath, {recursive: true, force: true}, (err) => {
       if (err) {
@@ -102,7 +102,7 @@ ipcMain.handle('add-site', async (event, category, url) => {
 });
 
 async function capturePage(category, url) {
-  const categoryPath = path.join(__dirname, 'userData', 'categories', category);
+  const categoryPath = path.join(__dirname, 'userData', 'Links', category);
   const snapshot = {
         width: 800,
         height: 600,
