@@ -7,7 +7,8 @@
         async connectedCallback() {
             await super.connectedCallback();
             this.props = {
-                modalRoot: document.querySelector('#modal-root')
+                modalRoot: document.querySelector('#modal-root'),
+                siteViewGrid: this.shadowRoot.querySelector('#site-view-grid')
             }
             this.shadowRoot.querySelector('#add-site-button').addEventListener('click', (_ev) => this.showAddModal());
             this.loadSites('test');
@@ -29,7 +30,9 @@
         
         async loadSites(category) {
             for (const [url, title] of Object.entries(await nvokerAPI.loadSites(category))) {
-                console.log(url, title);
+                const imageLink = document.createElement('image-link');
+                this.props.siteViewGrid.appendChild(imageLink);
+                imageLink.setImageLink(url, `userData/categories/test/${title}.png`, title, title);
             }
         }
     }
