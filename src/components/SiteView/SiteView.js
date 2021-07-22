@@ -7,11 +7,13 @@
         async connectedCallback() {
             await super.connectedCallback();
             this.props = {
+                siteViewMenu: this.shadowRoot.querySelector('#site-view-menu'),
+                addSiteButton: this.shadowRoot.querySelector('#add-site-button'),
                 modalRoot: document.querySelector('#modal-root'),
-                siteViewGrid: this.shadowRoot.querySelector('#site-view-grid')
+                siteViewGrid: this.shadowRoot.querySelector('#site-view-grid'),
+                currentCategory: null
             }
-            this.shadowRoot.querySelector('#add-site-button').addEventListener('click', (_ev) => this.showAddModal());
-            this.loadSites('test');
+            this.props.addSiteButton.addEventListener('click', (_ev) => this.showAddModal());
         }
 
         showAddModal() {
@@ -22,17 +24,18 @@
         }
 
         onAddModalConfirm(ev) {
-            console.log(ev.detail);
-            nvokerAPI.addSite('test', 'https://www.google.gr');
-            //nvokerAPI.addSite(ev.detail);
-            //this.loadSites();
+            nvokerAPI.addSite(this.props.currentCategory, ev.detail);
+            this.loadSites();
         }
         
         async loadSites(category) {
+            this.props.currentCategory = category ? category : this.props.currentCategory;
+            this.props.siteViewMenu.classList.toggle('inactive', false);
+            this.props.siteViewGrid.textContent = '';
             for (const [url, title] of Object.entries(await nvokerAPI.loadSites(category))) {
                 const imageLink = document.createElement('image-link');
                 this.props.siteViewGrid.appendChild(imageLink);
-                imageLink.setImageLink(url, `userData/Links/test/${title}.png`, title, title);
+                imageLink.setImageLink(url, `userData/Links/${category}/${title}.png`, decodeOSString(title), decodeOSString(title));
             }
         }
     }

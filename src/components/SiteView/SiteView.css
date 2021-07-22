@@ -42,3 +42,7 @@
     border-bottom: 0.1rem solid black;
     border-left: 0.1rem solid var(--palette-d);
 }
+
+#site-view-menu.inactive {
+    display: none;
+}

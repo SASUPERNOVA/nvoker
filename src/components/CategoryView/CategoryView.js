@@ -8,7 +8,8 @@
             await super.connectedCallback();
             this.props = {
                 categoryViewGrid: this.shadowRoot.querySelector('#category-view-grid'),
-                modalRoot: document.querySelector('#modal-root')
+                modalRoot: document.querySelector('#modal-root'),
+                siteView: this.nextElementSibling
             }
             this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
             this.loadCategories();
@@ -94,7 +95,7 @@
                 return;
             }
             const category = ev.target.textContent;
-            console.log(category);
+            this.props.siteView.loadSites(category);
             //ipcRenderer.send('request-links', category);
         }
     }
