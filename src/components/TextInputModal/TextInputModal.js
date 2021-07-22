@@ -1,12 +1,13 @@
 (() => {
-    class AddCategoryModal extends WebComponent {
+    class TextInputModal extends WebComponent {
         constructor() {
-            super('components/AddCategoryModal/AddCategoryModal.html');
+            super('components/TextInputModal/TextInputModal.html');
         }
 
         async connectedCallback() {
             await super.connectedCallback();
             this.props = {
+                modalLabel: this.shadowRoot.querySelector('#modal-label'),
                 exitButton: this.shadowRoot.querySelector('#exit-button'),
                 modalInput: this.shadowRoot.querySelector('#modal-input'),
                 confirmButton: this.shadowRoot.querySelector('#confirm-button')
@@ -24,7 +25,14 @@
             this.dispatchEvent(new CustomEvent('confirm', {detail: this.props.modalInput.value}));
             this.remove();
         }
+
+        setModal(modalLabel, confirmButton) {
+            this.onShadowRootReady(() => {
+                this.props.modalLabel.textContent = modalLabel ? modalLabel : this.props.modalLabel.textContent;
+                this.props.confirmButton.textContent = confirmButton ? confirmButton : this.props.confirmButton.textContent;
+            });
+        }
     }
 
-    customElements.define('add-category-modal', AddCategoryModal);
+    customElements.define('text-input-modal', TextInputModal);
 })();

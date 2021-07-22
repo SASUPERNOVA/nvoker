@@ -22,7 +22,8 @@
         }
 
         showAddModal() {
-            const addCategoryModal = document.createElement('add-category-modal');
+            const addCategoryModal = document.createElement('text-input-modal');
+            addCategoryModal.setModal('Enter a Category Name');
             this.props.modalRoot.appendChild(addCategoryModal);
             addCategoryModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
