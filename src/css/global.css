@@ -1,0 +1,17 @@
+button {
+    outline: 0;
+    user-select: none;
+}
+  
+input {
+    outline: 0;
+    background-color: #ffffff11;
+    border-top: 0.1rem solid var(--palette-e);
+    border-right: 0.1rem solid var(--palette-a);
+    border-bottom: 0.1rem solid var(--palette-a);
+    border-left: 0.1rem solid var(--palette-e);
+}
+  
+input::selection {
+    background-color: var(--palette-d);
+}

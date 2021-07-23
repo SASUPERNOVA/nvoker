@@ -24,26 +24,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 #root {
   height: 100%;
   display: grid;
   grid-template-columns: var(--cv-width) 1fr;
-}
-
-button {
-  outline: 0;
-  user-select: none;
-}
-
-input {
-  outline: 0;
-  background-color: #ffffff11;
-  border-top: 0.1rem solid var(--palette-e);
-  border-right: 0.1rem solid var(--palette-a);
-  border-bottom: 0.1rem solid var(--palette-a);
-  border-left: 0.1rem solid var(--palette-e);
-}
-
-input::selection {
-  background-color: var(--palette-d);
 }
