@@ -12,7 +12,6 @@
 
         onConfirmClick() {
             this.dispatchEvent(new CustomEvent('confirm'));
-            this.remove();
         }
 
         onCancelClick() {

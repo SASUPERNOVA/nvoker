@@ -30,7 +30,6 @@
 
         onConfirm() {
             this.dispatchEvent(new CustomEvent('confirm', {detail: this.props.modalInput.value}));
-            this.remove();
         }
 
         setModal(modalLabel, confirmButton) {
