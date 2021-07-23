@@ -17,13 +17,14 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "src/media/Nvoker.png"
+        "icon": "src/media/Nvoker.png",
+        "executableName": "nvoker"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Nvoker"
+            "name": "nvoker"
           }
         },
         {
@@ -34,11 +35,15 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "name": "nvoker"
+            }
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "name": "nvoker"
+            }
         }
       ]
     }
