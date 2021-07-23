@@ -13,7 +13,7 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
             console.error(err);
         }
     },
-    removeCategories(categories) {
+    removeCategories: (categories) => {
         ipcRenderer.send('remove-categories', categories);
     },
     addSite: async (category, url) => {
