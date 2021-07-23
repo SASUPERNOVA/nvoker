@@ -35,7 +35,7 @@
             for (const [url, title] of Object.entries(await nvokerAPI.loadSites(category))) {
                 const imageLink = document.createElement('image-link');
                 this.props.siteViewGrid.appendChild(imageLink);
-                imageLink.setImageLink(url, `userData/Links/${category}/${title}.png`, decodeOSString(title), decodeOSString(title));
+                imageLink.setImageLink(url, `userData/Links/${category}/${new URL(url).hostname}.png`, title, title);
             }
         }
     }

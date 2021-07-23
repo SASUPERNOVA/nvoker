@@ -1,7 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const { encodeOSString } = require('./utils/os_string');
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -123,12 +122,11 @@ async function capturePage(category, url) {
     await browser.loadURL(url);
     await new Promise(resolve => setTimeout(resolve, timeout));
     const image = await browser.webContents.capturePage();
-    // Allow special characters to be used in file name
-    const outputName = encodeOSString(browser.webContents.getTitle());
+    const title = browser.webContents.getTitle();
     fs.mkdirSync(categoryPath, {recursive: true});
-    fs.writeFileSync(path.join(categoryPath, `${outputName}.png`), image.toPNG());
+    fs.writeFileSync(path.join(categoryPath, `${new URL(url).hostname}.png`), image.toPNG());
     browser.close();
-    return outputName;
+    return title;
   }
   catch (err) {
     if (err.code === 'ERR_INVALID_URL') {
