@@ -1,7 +1,7 @@
 (()=> {
-    class RemoveCategoryModal extends WebComponent {
+    class SelectionModal extends WebComponent {
         constructor() {
-            super('components/RemoveCategoryModal/RemoveCategoryModal.html');
+            super('components/SelectionModal/SelectionModal.html');
         }
 
         async connectedCallback() {
@@ -20,5 +20,5 @@
         }
     }
 
-    customElements.define('remove-category-modal', RemoveCategoryModal);
+    customElements.define('selection-modal', SelectionModal);
 })();

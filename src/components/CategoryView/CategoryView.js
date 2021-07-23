@@ -30,7 +30,7 @@
         }
 
         showRemoveModal() {
-            const removeCategoryModal = document.createElement('remove-category-modal');
+            const removeCategoryModal = document.createElement('selection-modal');
             this.props.modalRoot.appendChild(removeCategoryModal);
             removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
             removeCategoryModal.addEventListener('cancel', (_ev) => this.onRemoveCancel());
