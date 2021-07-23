@@ -18,7 +18,7 @@
 
         showAddModal() {
             const addSiteModal = document.createElement('text-input-modal');
-            addSiteModal.setModal('Enter a Category Name');
+            addSiteModal.setModal('Enter a URL');
             this.props.modalRoot.appendChild(addSiteModal);
             addSiteModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
