@@ -23,8 +23,8 @@
             addSiteModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
 
-        onAddModalConfirm(ev) {
-            nvokerAPI.addSite(this.props.currentCategory, ev.detail);
+        async onAddModalConfirm(ev) {
+            await nvokerAPI.addSite(this.props.currentCategory, ev.detail);
             this.loadSites();
         }
         
@@ -32,10 +32,10 @@
             this.props.currentCategory = category ? category : this.props.currentCategory;
             this.props.siteViewMenu.classList.toggle('inactive', false);
             this.props.siteViewGrid.textContent = '';
-            for (const [url, title] of Object.entries(await nvokerAPI.loadSites(category))) {
+            for (const [url, title] of Object.entries(await nvokerAPI.loadSites(this.props.currentCategory))) {
                 const imageLink = document.createElement('image-link');
                 this.props.siteViewGrid.appendChild(imageLink);
-                imageLink.setImageLink(url, `userData/Links/${category}/${new URL(url).hostname}.png`, title, title);
+                imageLink.setImageLink(url, `userData/Links/${this.props.currentCategory}/${new URL(url).hostname}.png`, title, title);
                 imageLink.addEventListener('mousedown', (ev) => this.onAddSitePress(ev));
                 imageLink.addEventListener('click', (ev) => this.onImageLinkClick(ev));
             }
@@ -81,12 +81,12 @@
             confirmationModal.setActions(() => this.onRemoveConfirm(), () => this.onRemoveCancel());
         }
 
-        onRemoveConfirm() {
+        async onRemoveConfirm() {
             const sites = Array.from(this.props.siteViewGrid.children)
             .filter((element) => element.classList.contains('delete-site-selected'))
             .map((imageLink) => imageLink.getLink());
-            //nvokerAPI.removeCategories(categories);
-            //this.loadCategories();
+            await nvokerAPI.removeSites(this.props.currentCategory, sites);
+            this.loadSites();
             console.log(sites);
             this.props.modalRoot.children[0].remove();
         }
