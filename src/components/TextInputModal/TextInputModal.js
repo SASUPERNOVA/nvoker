@@ -16,6 +16,7 @@
             this.props.exitButton.addEventListener('click', (_ev) => this.onExitButtonClick());
             this.props.modalInput.addEventListener('keyup', (ev) => this.onKeyUp(ev));
             this.props.confirmButton.addEventListener('click', (_ev) => this.onConfirm());
+            this.props.modalInput.focus();
         }
 
         onExitButtonClick() {
