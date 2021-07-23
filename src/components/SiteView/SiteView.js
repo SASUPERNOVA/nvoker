@@ -64,8 +64,7 @@
                 ev.target.classList.toggle('delete-site-selected');
                 return;
             }
-            const url = ev.target.getLink();
-            console.log(url);
+            nvokerAPI.goto(ev.target.getLink());
         }
 
         onImageLinkContextMenu(ev) {

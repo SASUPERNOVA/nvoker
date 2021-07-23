@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, shell } = require('electron');
 
 contextBridge.exposeInMainWorld('nvokerAPI', {
     addCategory: (category) => {
@@ -35,5 +35,8 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
     },
     removeSites: (category, urls) => {
         ipcRenderer.send('remove-sites', category, urls);
+    },
+    goto: (url) => {
+        shell.openExternal(url);
     }
 });
