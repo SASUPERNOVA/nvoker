@@ -38,6 +38,7 @@
                 imageLink.setImageLink(url, `userData/Links/${this.props.currentCategory}/${new URL(url).hostname}.png`, title, title);
                 imageLink.addEventListener('mousedown', (ev) => this.onAddSitePress(ev));
                 imageLink.addEventListener('click', (ev) => this.onImageLinkClick(ev));
+                imageLink.addEventListener('contextmenu', (ev) => this.onImageLinkContextMenu(ev));
             }
         }
 
@@ -65,6 +66,10 @@
             }
             const url = ev.target.getLink();
             console.log(url);
+        }
+
+        onImageLinkContextMenu(ev) {
+            navigator.clipboard.writeText(ev.target.getLink());
         }
 
         showRemoveModal() {
