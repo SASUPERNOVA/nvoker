@@ -14,11 +14,18 @@
             }
 
             this.props.exitButton.addEventListener('click', (_ev) => this.onExitButtonClick());
+            this.props.modalInput.addEventListener('keyup', (ev) => this.onKeyUp(ev));
             this.props.confirmButton.addEventListener('click', (_ev) => this.onConfirm());
         }
 
         onExitButtonClick() {
             this.remove();
+        }
+
+        onKeyUp(ev) {
+            if (ev.key == 'Enter') {
+                this.onConfirm();
+            }
         }
 
         onConfirm() {
