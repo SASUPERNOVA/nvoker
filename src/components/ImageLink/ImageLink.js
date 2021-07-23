@@ -11,7 +11,6 @@
                 linkButtonImage: this.shadowRoot.querySelector('#link-button-image'),
                 linkButtonOverlay: this.shadowRoot.querySelector('#link-button-overlay')
             }
-            this.props.linkButton.addEventListener('click', (_ev) => this.onLinkButtonClick());
         }
 
         setImageLink(linkButton, linkButtonImage, linkButtonImageAlt, linkButtonOverlay) {
@@ -23,8 +22,8 @@
             });
         }
 
-        onLinkButtonClick() {
-            console.log(this.props.linkButton.name);
+        getLink() {
+            return this.props.linkButton.name;
         }
     }
 
