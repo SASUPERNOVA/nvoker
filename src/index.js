@@ -16,6 +16,9 @@ const createWindow = () => {
       contextIsolation: true
   }
   });
+  if (!app.commandLine.hasSwitch('debug')) {
+    mainWindow.removeMenu();
+  }
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 };
