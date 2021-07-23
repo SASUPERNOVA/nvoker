@@ -6,6 +6,8 @@
 }
 
 #site-view-menu {
+    position: sticky;
+    top: 0;
     display: grid;
     grid-template-columns: 1fr;
     padding: 0.2rem 0.2rem;
