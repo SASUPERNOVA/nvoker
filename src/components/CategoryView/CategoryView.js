@@ -96,7 +96,6 @@
             }
             const category = ev.target.textContent;
             this.props.siteView.loadSites(category);
-            //ipcRenderer.send('request-links', category);
         }
     }
 
