@@ -22,9 +22,9 @@
         }
 
         async onAddModalConfirm(ev) {
+            popModalRoot();
             await nvokerAPI.addSite(this.props.currentCategory, ev.detail);
             this.loadSites();
-            popModalRoot();
         }
         
         async loadSites(category) {
