@@ -32,5 +32,8 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
         catch (err) {
             console.error(err);
         }
+    },
+    removeSites: (category, urls) => {
+        ipcRenderer.send('remove-sites', category, urls);
     }
 });
