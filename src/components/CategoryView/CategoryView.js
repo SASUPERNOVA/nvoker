@@ -8,7 +8,6 @@
             await super.connectedCallback();
             this.props = {
                 categoryViewGrid: this.shadowRoot.querySelector('#category-view-grid'),
-                modalRoot: document.querySelector('#modal-root'),
                 siteView: this.nextElementSibling
             }
             this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
@@ -23,15 +22,14 @@
         }
 
         showAddModal() {
-            const addCategoryModal = document.createElement('text-input-modal');
+            const addCategoryModal = pushModalRoot('text-input-modal');
             addCategoryModal.setModal('Enter a Category Name');
-            this.props.modalRoot.appendChild(addCategoryModal);
             addCategoryModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
 
         showRemoveModal() {
-            const removeCategoryModal = document.createElement('selection-modal');
-            this.props.modalRoot.appendChild(removeCategoryModal);
+            const removeCategoryModal = pushModalRoot('selection-modal');
+            removeCategoryModal.parent = this;
             removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
             removeCategoryModal.addEventListener('cancel', (_ev) => this.onRemoveCancel());
         }
@@ -39,11 +37,11 @@
         onAddModalConfirm(ev) {
             nvokerAPI.addCategory(ev.detail);
             this.loadCategories();
+            popModalRoot();
         }
 
         onRemoveModalConfirm() {
-            const confirmationModal = document.createElement('confirmation-modal');
-            this.props.modalRoot.appendChild(confirmationModal);
+            const confirmationModal = pushModalRoot('confirmation-modal');
             confirmationModal.setModal('Delete Categories', 'Are you sure you want to delete the selected categories?');
             confirmationModal.setActions(() => this.onRemoveConfirm(), () => this.onRemoveCancel());
         }
@@ -54,14 +52,15 @@
             .map(({ textContent }) => textContent);
             nvokerAPI.removeCategories(categories);
             this.loadCategories();
-            this.props.modalRoot.children[0].remove();
+            popModalRoot();
+            popModalRoot();
         }
 
         onRemoveCancel() {
             for (const category of Array.from(this.props.categoryViewGrid.children)) {
                 category.classList.toggle('delete-category-selected', false);
             }
-            this.props.modalRoot.children[0].remove();
+            popModalRoot();
         }
 
         createCategoryButton(category) {
@@ -82,7 +81,9 @@
             }
         
             const holdTimeout = setTimeout(() => {
-                this.showRemoveModal();
+                if (!document.querySelector('selection-modal')) {
+                    this.showRemoveModal();
+                }
             }, 1000);
         
             target.addEventListener('mouseup', cancelTimeout);
@@ -90,8 +91,12 @@
         }
 
         onCategoryButtonClick(ev) {
-            if (this.props.modalRoot.children.length != 0) {
-                ev.target.classList.toggle('delete-category-selected');
+            const selectionModal = document.querySelector('selection-modal');
+            const confirmationModal = document.querySelector('confirmation-modal');
+            if (selectionModal) {
+                if (selectionModal.parent == this && !confirmationModal) {
+                    ev.target.classList.toggle('delete-category-selected');
+                }
                 return;
             }
             const category = ev.target.textContent;

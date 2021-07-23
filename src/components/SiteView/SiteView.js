@@ -9,7 +9,6 @@
             this.props = {
                 siteViewMenu: this.shadowRoot.querySelector('#site-view-menu'),
                 addSiteButton: this.shadowRoot.querySelector('#add-site-button'),
-                modalRoot: document.querySelector('#modal-root'),
                 siteViewGrid: this.shadowRoot.querySelector('#site-view-grid'),
                 currentCategory: null
             }
@@ -17,15 +16,15 @@
         }
 
         showAddModal() {
-            const addSiteModal = document.createElement('text-input-modal');
+            const addSiteModal = pushModalRoot('text-input-modal');
             addSiteModal.setModal('Enter a URL');
-            this.props.modalRoot.appendChild(addSiteModal);
             addSiteModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
         }
 
         async onAddModalConfirm(ev) {
             await nvokerAPI.addSite(this.props.currentCategory, ev.detail);
             this.loadSites();
+            popModalRoot();
         }
         
         async loadSites(category) {
@@ -52,7 +51,9 @@
             }
         
             const holdTimeout = setTimeout(() => {
-                this.showRemoveModal();
+                if (!document.querySelector('selection-modal')) {
+                    this.showRemoveModal();
+                }
             }, 1000);
         
             target.addEventListener('mouseup', cancelTimeout);
@@ -60,8 +61,12 @@
         }
 
         onImageLinkClick(ev) {
-            if (this.props.modalRoot.children.length != 0) {
-                ev.target.classList.toggle('delete-site-selected');
+            const selectionModal = document.querySelector('selection-modal');
+            const confirmationModal = document.querySelector('confirmation-modal');
+            if (selectionModal) {
+                if (selectionModal.parent == this && !confirmationModal) {
+                    ev.target.classList.toggle('delete-site-selected');
+                }
                 return;
             }
             nvokerAPI.goto(ev.target.getLink());
@@ -72,15 +77,14 @@
         }
 
         showRemoveModal() {
-            const removeCategoryModal = document.createElement('selection-modal');
-            this.props.modalRoot.appendChild(removeCategoryModal);
+            const removeCategoryModal = pushModalRoot('selection-modal');
+            removeCategoryModal.parent = this;
             removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
             removeCategoryModal.addEventListener('cancel', (_ev) => this.onRemoveCancel());
         }
 
         onRemoveModalConfirm() {
-            const confirmationModal = document.createElement('confirmation-modal');
-            this.props.modalRoot.appendChild(confirmationModal);
+            const confirmationModal = pushModalRoot('confirmation-modal');
             confirmationModal.setModal('Delete Sites', 'Are you sure you want to delete the selected sites?');
             confirmationModal.setActions(() => this.onRemoveConfirm(), () => this.onRemoveCancel());
         }
@@ -91,15 +95,15 @@
             .map((imageLink) => imageLink.getLink());
             await nvokerAPI.removeSites(this.props.currentCategory, sites);
             this.loadSites();
-            console.log(sites);
-            this.props.modalRoot.children[0].remove();
+            popModalRoot();
+            popModalRoot();
         }
 
         onRemoveCancel() {
             for (const site of Array.from(this.props.siteViewGrid.children)) {
                 site.classList.toggle('delete-site-selected', false);
             }
-            this.props.modalRoot.children[0].remove();
+            popModalRoot();
         }
     }
 
