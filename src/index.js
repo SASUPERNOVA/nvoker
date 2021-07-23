@@ -140,3 +140,21 @@ async function capturePage(category, url) {
     }
   }
 }
+
+ipcMain.on('remove-sites', (_event, category, urls) => {
+  const linkPath = path.join(__dirname, 'userData', 'Links.json');
+
+  let data = fs.readFileSync(linkPath);
+  data = JSON.parse(data);
+
+  for (const url of urls) {
+  const categoryPath = path.join(__dirname, 'userData', 'Links', category);
+    delete data[category][url];
+    fs.rm(path.join(categoryPath, `${new URL(url).hostname}.png`,), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  }
+  fs.writeFileSync(linkPath, JSON.stringify(data, null, ' '));
+});
