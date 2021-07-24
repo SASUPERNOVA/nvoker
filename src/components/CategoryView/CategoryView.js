@@ -85,6 +85,9 @@
             .map(({ textContent }) => textContent);
             nvokerAPI.removeCategories(categories);
             this.loadCategories();
+            if (categories.includes(this.props.siteView.props.currentCategory)) {
+                this.props.siteView.loadSites(null);
+            }
             clearModalRoot();
         }
 
