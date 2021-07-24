@@ -1,7 +1,7 @@
 {
   "name": "nvoker",
   "productName": "Nvoker",
-  "version": "2.0.0-rc.0",
+  "version": "2.0.0-rc.1",
   "description": "A Cross-Platform Dialer",
   "main": "src/index.js",
   "scripts": {
@@ -37,13 +37,13 @@
           "name": "@electron-forge/maker-deb",
           "config": {
             "name": "nvoker"
-            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
           "config": {
             "name": "nvoker"
-            }
+          }
         }
       ]
     }
