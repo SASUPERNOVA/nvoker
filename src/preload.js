@@ -7,10 +7,11 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
     loadCategories: async () => {
         try {
             const data = await ipcRenderer.invoke('load-file', 'Links.json');
-            return Object.keys(data);
+            return Object.keys(data) ? Object.keys(data) : [];
         }
         catch (err) {
             console.error(err);
+            return [];
         }
     },
     removeCategories: (categories) => {
@@ -27,10 +28,11 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
     loadSites: async (category) => {
         try {
             const data = await ipcRenderer.invoke('load-file', 'Links.json');
-            return data[category];
+            return data[category] ? data[category] : {};
         }
         catch (err) {
             console.error(err);
+            return {};
         }
     },
     removeSites: (category, urls) => {
