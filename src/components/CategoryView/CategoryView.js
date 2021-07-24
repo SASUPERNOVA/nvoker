@@ -10,7 +10,9 @@
                 categoryViewGrid: this.shadowRoot.querySelector('#category-view-grid'),
                 siteView: this.nextElementSibling
             }
-            this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) => this.showAddModal());
+            this.shadowRoot.querySelector('#add-category-button').addEventListener('click', (_ev) =>  showTextInputModal({
+                label: "Enter a Category Name"
+            }, (ev) => this.onAddModalConfirm(ev)));
             this.loadCategories();
         }
         
@@ -21,17 +23,48 @@
             }
         }
 
-        showAddModal() {
-            const addCategoryModal = pushModalRoot('text-input-modal');
-            addCategoryModal.setModal('Enter a Category Name');
-            addCategoryModal.addEventListener('confirm', (ev) => this.onAddModalConfirm(ev));
+        createCategoryButton(category) {
+            const categoryButton = document.createElement('button');
+            categoryButton.textContent = category;
+            this.props.categoryViewGrid.appendChild(categoryButton);
+            categoryButton.addEventListener('mousedown', (ev) => this.onCategoryButtonPress(ev));
+            categoryButton.addEventListener('click', (ev) => this.onCategoryButtonClick(ev));
         }
 
-        showRemoveModal() {
-            const removeCategoryModal = pushModalRoot('selection-modal');
-            removeCategoryModal.parent = this;
-            removeCategoryModal.addEventListener('confirm', (_ev) => this.onRemoveModalConfirm());
-            removeCategoryModal.addEventListener('cancel', (_ev) => this.onRemoveCancel());
+        onCategoryButtonClick(ev) {
+            const selectionModal = document.querySelector('selection-modal');
+            const confirmationModal = document.querySelector('confirmation-modal');
+            if (selectionModal) {
+                if (selectionModal.parent == this && !confirmationModal) {
+                    ev.target.classList.toggle('delete-category-selected');
+                }
+                return;
+            }
+            const category = ev.target.textContent;
+            this.props.siteView.loadSites(category);
+        }
+
+        onCategoryButtonPress (ev) {
+            const {target} = ev;
+        
+            const cancelTimeout = () => {
+                clearTimeout(holdTimeout);
+                target.removeEventListener('mouseup', cancelTimeout);
+                target.removeEventListener('mouseleave', cancelTimeout);
+            }
+        
+            const holdTimeout = setTimeout(() => {
+                if (!document.querySelector('selection-modal')) {
+                    const selectionModal = showSelectionModal((_ev) => showConfirmationModal({
+                        title: 'Delete Categories',
+                        message: 'Are you sure you want to delete the selected categories?'
+                    }, () => this.onRemoveConfirm(), () => this.onRemoveCancel()), (_ev) => this.onRemoveCancel());
+                    selectionModal.parent = this;
+                }
+            }, 1000);
+        
+            target.addEventListener('mouseup', cancelTimeout);
+            target.addEventListener('mouseleave', cancelTimeout);
         }
         
         onAddModalConfirm(ev) {
@@ -52,8 +85,7 @@
             .map(({ textContent }) => textContent);
             nvokerAPI.removeCategories(categories);
             this.loadCategories();
-            popModalRoot();
-            popModalRoot();
+            clearModalRoot();
         }
 
         onRemoveCancel() {
@@ -61,46 +93,6 @@
                 category.classList.toggle('delete-category-selected', false);
             }
             popModalRoot();
-        }
-
-        createCategoryButton(category) {
-            const categoryButton = document.createElement('button');
-            categoryButton.textContent = category;
-            this.props.categoryViewGrid.appendChild(categoryButton);
-            categoryButton.addEventListener('mousedown', (ev) => this.onCategoryButtonPress(ev));
-            categoryButton.addEventListener('click', (ev) => this.onCategoryButtonClick(ev));
-        }
-
-        onCategoryButtonPress (ev) {
-            const {target} = ev;
-        
-            const cancelTimeout = () => {
-                clearTimeout(holdTimeout);
-                target.removeEventListener('mouseup', cancelTimeout);
-                target.removeEventListener('mouseleave', cancelTimeout);
-            }
-        
-            const holdTimeout = setTimeout(() => {
-                if (!document.querySelector('selection-modal')) {
-                    this.showRemoveModal();
-                }
-            }, 1000);
-        
-            target.addEventListener('mouseup', cancelTimeout);
-            target.addEventListener('mouseleave', cancelTimeout);
-        }
-
-        onCategoryButtonClick(ev) {
-            const selectionModal = document.querySelector('selection-modal');
-            const confirmationModal = document.querySelector('confirmation-modal');
-            if (selectionModal) {
-                if (selectionModal.parent == this && !confirmationModal) {
-                    ev.target.classList.toggle('delete-category-selected');
-                }
-                return;
-            }
-            const category = ev.target.textContent;
-            this.props.siteView.loadSites(category);
         }
     }
 
