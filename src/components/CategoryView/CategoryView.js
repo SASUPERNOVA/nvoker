@@ -70,6 +70,9 @@
         onAddModalConfirm(ev) {
             nvokerAPI.addCategory(ev.detail);
             this.loadCategories();
+            if (!this.props.siteView.props.currentCategory) {
+                this.props.siteView.loadSites(ev.detail);
+            }
             popModalRoot();
         }
 
