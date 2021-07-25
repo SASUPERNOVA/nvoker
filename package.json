@@ -1,7 +1,7 @@
 {
   "name": "nvoker",
   "productName": "Nvoker",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0",
   "description": "A Cross-Platform Dialer",
   "main": "src/index.js",
   "scripts": {
