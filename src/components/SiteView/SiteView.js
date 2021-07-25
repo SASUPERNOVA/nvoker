@@ -60,10 +60,11 @@
         
             const holdTimeout = setTimeout(() => {
                 if (!document.querySelector('selection-modal')) {
-                    showSelectionModal((_ev) => showConfirmationModal({
+                    const selectionModal = showSelectionModal((_ev) => showConfirmationModal({
                         title: 'Delete Sites',
                         message: 'Are you sure you want to delete the selected sites?'
-                    }, () => this.onRemoveConfirm(), this.onRemoveCancel()), (_ev) => this.onRemoveCancel());
+                    }, () => this.onRemoveConfirm(), () => this.onRemoveCancel()), (_ev) => this.onRemoveCancel());
+                    selectionModal.parent = this;
                 }
             }, 1000);
         
