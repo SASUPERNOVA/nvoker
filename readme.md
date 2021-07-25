@@ -6,10 +6,6 @@
 
 Nvoker is as Speed Dial built on [Electron](https://github.com/electron/electron), using [Electron Forge](https://github.com/electron-userland/electron-forge). It allows you to quickly access you favorite websites, by saving them as images in your own categories.
 
-## Note
-
-The latest version of Nvoker is a rewrite of the older, [React](https://reactjs.org/) version, using [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Therefore, some parts may be unstable, or not working correctly.
-
 ## General Usage
 
 To start adding links, a category must first be created. After a category has been created and selected, you can start adding links to that category by providing its URL. Left clicking on a link will open that link in your default browser, while right clicking will copy the URL to clipboard. You can create any number of categories and links, so feel free to add as many as you wish.  
