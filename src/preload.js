@@ -40,5 +40,8 @@ contextBridge.exposeInMainWorld('nvokerAPI', {
     },
     goto: (url) => {
         shell.openExternal(url);
+    },
+    platform: () => {
+        return process.platform;
     }
 });

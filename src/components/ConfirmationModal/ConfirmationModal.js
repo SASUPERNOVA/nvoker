@@ -9,24 +9,28 @@
             this.props = {
                 title: this.shadowRoot.querySelector('#confirmation-title'),
                 message: this.shadowRoot.querySelector('#confirmation-message'),
-                optionA: this.shadowRoot.querySelector('#option-a'),
-                optionB: this.shadowRoot.querySelector('#option-b')
+                acceptButton: this.shadowRoot.querySelector('#option-a'),
+                declineButton: this.shadowRoot.querySelector('#option-b')
             };
+
+            if (nvokerAPI.platform() == 'win32') {
+                this.shadowRoot.querySelector('#confirmation-options').insertBefore(this.props.declineButton, this.props.acceptButton);
+            }
         }
 
-        setModal(title, message, optionA, optionB) {
+        setModal(title, message, acceptButton, declineButton) {
             this.onShadowRootReady(() => {
                 this.props.title.textContent = title ? title : this.props.title.textContent;
                 this.props.message.textContent = message ? message: this.props.message.textContent;
-                this.props.optionA.textContent = optionA ? optionA : this.props.optionA.textContent;
-                this.props.optionB.textContent = optionB ? optionB : this.props.optionB.textContent;
+                this.props.acceptButton.textContent = acceptButton ? acceptButton : this.props.acceptButton.textContent;
+                this.props.declineButton.textContent = declineButton ? declineButton : this.props.declineButton.textContent;
             });
         }
 
-        setActions(actionA, actionB) {
+        setActions(accept, decline) {
             this.onShadowRootReady(() => {
-                this.props.optionA.addEventListener('click', actionA);
-                this.props.optionB.addEventListener('click', actionB);
+                this.props.acceptButton.addEventListener('click', accept);
+                this.props.declineButton.addEventListener('click', decline);
             });
         }
     }
